@@ -38,7 +38,7 @@ PrivateData = @{
         Tags = @('Permissions')
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/mainsails/ps/PermissionManagement'
+        ProjectUri = 'https://github.com/mainsails/PermissionManagement'
 
     } # End of PSData hashtable
 
