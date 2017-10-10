@@ -35,7 +35,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = @('Permissions')
+        Tags = @('Permissions','Configuration')
 
         # A URL to the main website for this project.
         ProjectUri = 'https://github.com/mainsails/PermissionManagement'
