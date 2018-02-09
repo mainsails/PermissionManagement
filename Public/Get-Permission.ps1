@@ -60,7 +60,7 @@ Function Get-Permission {
     }
 
     If (-not (Test-Path -Path $Path)) {
-        Write-Error ('Path ''{0}'' not found.' -f $Path)
+        Write-Error -Message ('Path ''{0}'' not found.' -f $Path)
         return
     }
 

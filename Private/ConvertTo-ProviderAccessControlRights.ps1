@@ -23,8 +23,8 @@ Function ConvertTo-ProviderAccessControlRights {
     )
 
     Begin {
-        $Rights = 0
-        $RightTypeName = 'Security.AccessControl.{0}Rights' -f $ProviderName
+        $Rights            = 0
+        $RightTypeName     = 'Security.AccessControl.{0}Rights' -f $ProviderName
         $FoundInvalidRight = $false
     }
     Process {
@@ -32,7 +32,7 @@ Function ConvertTo-ProviderAccessControlRights {
             $Right = ($_ -as $RightTypeName)
             If (-not $Right) {
                 $AllowedValues = [Enum]::GetNames($RightTypeName)
-                Write-Error ("System.Security.AccessControl.{0}Rights value '{1}' not found.  Must be one of: {2}." -f $ProviderName,$_,($AllowedValues -join ' '))
+                Write-Error -Message ("System.Security.AccessControl.{0}Rights value '{1}' not found.  Must be one of: {2}." -f $ProviderName,$_,($AllowedValues -join ' '))
                 $FoundInvalidRight = $true
                 return
             }

@@ -80,7 +80,7 @@ Function Test-Permission {
         If (-not $Path) {
             $Path = $OriginalPath
         }
-        Write-Error ('Unable to test {0}''s {1} permissions: path ''{2}'' not found.' -f $Identity,($Permission -join ','),$Path)
+        Write-Error -Message ('Unable to test {0}''s {1} permissions: path ''{2}'' not found.' -f $Identity,($Permission -join ','),$Path)
         return
     }
 
@@ -95,7 +95,7 @@ Function Test-Permission {
     }
     $Rights = $Permission | ConvertTo-ProviderAccessControlRights -ProviderName $ProviderName
     If (-not $Rights) {
-        Write-Error ('Unable to test {0}''s {1} permissions on {2}: received an unknown permission.' -f $Identity,$Permission,$Path)
+        Write-Error -Message ('Unable to test {0}''s {1} permissions on {2}: received an unknown permission.' -f $Identity,$Permission,$Path)
         return
     }
 
@@ -105,15 +105,15 @@ Function Test-Permission {
     }
 
     $RightsPropertyName = '{0}Rights' -f $ProviderName
-    $InheritanceFlags = [Security.AccessControl.InheritanceFlags]::None
-    $PropagationFlags = [Security.AccessControl.PropagationFlags]::None
+    $InheritanceFlags   = [Security.AccessControl.InheritanceFlags]::None
+    $PropagationFlags   = [Security.AccessControl.PropagationFlags]::None
     $TestApplyTo = $false
     If ($PSBoundParameters.ContainsKey('ApplyTo')) {
         If ((Test-Path -Path $Path -PathType Leaf)) {
-            Write-Warning "Can't test inheritance/propagation rules on a leaf. Please omit 'ApplyTo' parameter when 'Path' is a leaf"
+            Write-Warning -Message "Can't test inheritance/propagation rules on a leaf. Please omit 'ApplyTo' parameter when 'Path' is a leaf"
         }
         Else {
-            $TestApplyTo = $true
+            $TestApplyTo      = $true
             $InheritanceFlags = ConvertTo-InheritanceFlag -ContainerInheritanceFlag $ApplyTo
             $PropagationFlags = ConvertTo-PropagationFlag -ContainerInheritanceFlag $ApplyTo
         }

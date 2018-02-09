@@ -164,18 +164,18 @@ Function Grant-Permission {
     }
 
     If ($ProviderName -ne 'Registry' -and $ProviderName -ne 'FileSystem' -and $ProviderName -ne 'CryptoKey') {
-        Write-Error "Unsupported path: '$Path' belongs to the '$ProviderName' provider. Only file system, registry, and certificate paths are supported"
+        Write-Error -Message "Unsupported path: '$Path' belongs to the '$ProviderName' provider. Only file system, registry, and certificate paths are supported"
         return
     }
 
     $Rights = $Permission | ConvertTo-ProviderAccessControlRights -ProviderName $ProviderName
     If (-not $Rights) {
-        Write-Error ('Unable to grant {0} {1} permissions on {2}: received an unknown permission.' -f $Identity,($Permission -join ','),$Path)
+        Write-Error -Message ('Unable to grant {0} {1} permissions on {2}: received an unknown permission.' -f $Identity,($Permission -join ','),$Path)
         return
     }
 
     If (-not (Test-Identity -Name $Identity)) {
-        Write-Error ('Identity ''{0}'' not found.' -f $Identity)
+        Write-Error -Message ('Identity ''{0}'' not found.' -f $Identity)
         return
     }
 
@@ -187,18 +187,18 @@ Function Grant-Permission {
             [Security.Cryptography.X509Certificates.X509Certificate2]$Certificate = $_
 
             If (-not $Certificate.HasPrivateKey) {
-                Write-Warning ('Certificate {0} ({1}; {2}) does not have a private key.' -f $Certificate.Thumbprint,$Certificate.Subject,$Path)
+                Write-Warning -Message ('Certificate {0} ({1}; {2}) does not have a private key.' -f $Certificate.Thumbprint,$Certificate.Subject,$Path)
                 return
             }
 
             If (-not $Certificate.PrivateKey) {
-                Write-Error ('Access is denied to private key of certificate {0} ({1}; {2}).' -f $Certificate.Thumbprint,$Certificate.Subject,$Path)
+                Write-Error -Message ('Access is denied to private key of certificate {0} ({1}; {2}).' -f $Certificate.Thumbprint,$Certificate.Subject,$Path)
                 return
             }
 
             [Security.AccessControl.CryptoKeySecurity]$KeySecurity = $Certificate.PrivateKey.CspKeyContainerInfo.CryptoKeySecurity
             If (-not $KeySecurity) {
-                Write-Error ('Private key ACL not found for certificate {0} ({1}; {2}).' -f $Certificate.Thumbprint,$Certificate.Subject,$Path)
+                Write-Error -Message ('Private key ACL not found for certificate {0} ({1}; {2}).' -f $Certificate.Thumbprint,$Certificate.Subject,$Path)
                 return
             }
 
@@ -211,9 +211,9 @@ Function Grant-Permission {
                 If ($RulesToRemove) {
                     $RulesToRemove |
                     ForEach-Object {
-                        Write-Verbose ('[{0} {1}] [{1}]  {2} -> ' -f $Certificate.IssuedTo,$Path,$_.IdentityReference,$_.CryptoKeyRights)
+                        Write-Verbose -Message ('[{0} {1}] [{1}]  {2} -> ' -f $Certificate.IssuedTo,$Path,$_.IdentityReference,$_.CryptoKeyRights)
                         If (-not $KeySecurity.RemoveAccessRule($_)) {
-                            Write-Error ('Failed to remove {0}''s {1} permissions on ''{2}'' (3) certificate''s private key.' -f $_.IdentityReference,$_.CryptoKeyRights,$Certificate.Subject,$Certificate.Thumbprint)
+                            Write-Error -Message ('Failed to remove {0}''s {1} permissions on ''{2}'' (3) certificate''s private key.' -f $_.IdentityReference,$_.CryptoKeyRights,$Certificate.Subject,$Certificate.Thumbprint)
                         }
                     }
                 }
@@ -221,7 +221,7 @@ Function Grant-Permission {
 
             $CertPath = Join-Path -Path 'cert:' -ChildPath (Split-Path -NoQualifier -Path $Certificate.PSPath)
 
-            $AccessRule = New-Object 'Security.AccessControl.CryptoKeyAccessRule' ($Identity,$Rights,$Type) |
+            $AccessRule = New-Object -TypeName 'Security.AccessControl.CryptoKeyAccessRule' ($Identity,$Rights,$Type) |
                           Add-Member -MemberType NoteProperty -Name 'Path' -Value $CertPath -PassThru
 
             If ($Force -or $RulesToRemove -or -not (Test-Permission -Path $CertPath -Identity $Identity -Permission $Permission -Exact)) {
@@ -255,7 +255,7 @@ Function Grant-Permission {
         }
         Else {
             If ($PSBoundParameters.ContainsKey('ApplyTo')) {
-                Write-Warning "Can't apply inheritance/propagation rules to a leaf. Please omit 'ApplyTo' parameter when 'Path' is a leaf"
+                Write-Warning -Message "Can't apply inheritance/propagation rules to a leaf. Please omit 'ApplyTo' parameter when 'Path' is a leaf"
             }
         }
 

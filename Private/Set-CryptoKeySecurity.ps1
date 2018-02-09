@@ -9,9 +9,9 @@ Function Set-CryptoKeySecurity {
         [string]$Action
    )
 
-    $KeyContainerInfo = $Certificate.PrivateKey.CspKeyContainerInfo
-    $CspParams = New-Object 'Security.Cryptography.CspParameters' ($KeyContainerInfo.ProviderType, $KeyContainerInfo.ProviderName, $KeyContainerInfo.KeyContainerName)
-    $CspParams.Flags = [Security.Cryptography.CspProviderFlags]::UseExistingKey
+    $KeyContainerInfo    = $Certificate.PrivateKey.CspKeyContainerInfo
+    $CspParams           = New-Object 'Security.Cryptography.CspParameters' ($KeyContainerInfo.ProviderType, $KeyContainerInfo.ProviderName, $KeyContainerInfo.KeyContainerName)
+    $CspParams.Flags     = [Security.Cryptography.CspProviderFlags]::UseExistingKey
     $CspParams.KeyNumber = $KeyContainerInfo.KeyNumber
     If ((Split-Path -NoQualifier -Path $Certificate.PSPath) -like 'LocalMachine\*') {
         $CspParams.Flags = $CspParams.Flags -bor [Security.Cryptography.CspProviderFlags]::UseMachineKeyStore
@@ -29,6 +29,6 @@ Function Set-CryptoKeySecurity {
         While ($ActualException.InnerException) {
             $ActualException = $ActualException.InnerException
         }
-        Write-Error ('Failed to {0} to ''{1}'' ({2}) certificate''s private key: {3}: {4}' -f $Action,$Certificate.Subject,$Certificate.Thumbprint,$ActualException.GetType().FullName,$ActualException.Message)
+        Write-Error -Message ('Failed to {0} to ''{1}'' ({2}) certificate''s private key: {3}: {4}' -f $Action,$Certificate.Subject,$Certificate.Thumbprint,$ActualException.GetType().FullName,$ActualException.Message)
     }
 }

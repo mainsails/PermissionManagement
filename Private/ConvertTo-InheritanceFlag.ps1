@@ -27,24 +27,24 @@ Function ConvertTo-InheritanceFlag {
 
     $Flags = [Security.AccessControl.InheritanceFlags]
     $Map = @{
-        'Container' =                                  $Flags::None;
-        'SubContainers' =                              $Flags::ContainerInherit;
-        'Leaves' =                                     $Flags::ObjectInherit;
-        'ChildContainers' =                            $Flags::ContainerInherit;
-        'ChildLeaves' =                                $Flags::ObjectInherit;
-        'ContainerAndSubContainers' =                  $Flags::ContainerInherit;
-        'ContainerAndLeaves' =                         $Flags::ObjectInherit;
-        'SubContainersAndLeaves' =                    ($Flags::ContainerInherit -bor $Flags::ObjectInherit);
-        'ContainerAndChildContainers' =                $Flags::ContainerInherit;
-        'ContainerAndChildLeaves' =                    $Flags::ObjectInherit;
+        'Container'                                 =  $Flags::None;
+        'SubContainers'                             =  $Flags::ContainerInherit;
+        'Leaves'                                    =  $Flags::ObjectInherit;
+        'ChildContainers'                           =  $Flags::ContainerInherit;
+        'ChildLeaves'                               =  $Flags::ObjectInherit;
+        'ContainerAndSubContainers'                 =  $Flags::ContainerInherit;
+        'ContainerAndLeaves'                        =  $Flags::ObjectInherit;
+        'SubContainersAndLeaves'                    = ($Flags::ContainerInherit -bor $Flags::ObjectInherit);
+        'ContainerAndChildContainers'               =  $Flags::ContainerInherit;
+        'ContainerAndChildLeaves'                   =  $Flags::ObjectInherit;
         'ContainerAndChildContainersAndChildLeaves' = ($Flags::ContainerInherit -bor $Flags::ObjectInherit);
-        'ContainerAndSubContainersAndLeaves' =        ($Flags::ContainerInherit -bor $Flags::ObjectInherit);
-        'ChildContainersAndChildLeaves' =             ($Flags::ContainerInherit -bor $Flags::ObjectInherit);
+        'ContainerAndSubContainersAndLeaves'        = ($Flags::ContainerInherit -bor $Flags::ObjectInherit);
+        'ChildContainersAndChildLeaves'             = ($Flags::ContainerInherit -bor $Flags::ObjectInherit);
     }
     $Key = $ContainerInheritanceFlag.ToString()
     If ($Map.ContainsKey($key)) {
         return $Map[$Key]
     }
 
-    Write-Error ('Unknown PSPM.Security.ContainerInheritanceFlags enumeration value {0}.' -f $ContainerInheritanceFlag)
+    Write-Error -Message ('Unknown PSPM.Security.ContainerInheritanceFlags enumeration value {0}.' -f $ContainerInheritanceFlag)
 }

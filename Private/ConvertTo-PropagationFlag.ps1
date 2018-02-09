@@ -46,5 +46,5 @@ Function ConvertTo-PropagationFlag {
         return $Map[$Key]
     }
 
-    Write-Error ('Unknown PSPM.Security.ContainerInheritanceFlags enumeration value {0}.' -f $ContainerInheritanceFlag)
+    Write-Error -Message ('Unknown PSPM.Security.ContainerInheritanceFlags enumeration value {0}.' -f $ContainerInheritanceFlag)
 }

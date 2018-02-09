@@ -22,10 +22,10 @@ Function Get-PathProvider {
 
     $PathQualifier = Split-Path -Qualifier $Path -ErrorAction SilentlyContinue
     If (-not $PathQualifier) {
-        $Path = Join-Path -Path (Get-Location) -ChildPath $Path
+        $Path          = Join-Path -Path (Get-Location) -ChildPath $Path
         $PathQualifier = Split-Path -Qualifier $Path -ErrorAction SilentlyContinue
         If (-not $PathQualifier)  {
-            Write-Error "Qualifier for path '$Path' not found."
+            Write-Error -Message "Qualifier for path '$Path' not found."
             return
         }
     }

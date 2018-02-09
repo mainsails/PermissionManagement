@@ -32,10 +32,10 @@ Function ConvertTo-ContainerInheritanceFlags {
         [Security.AccessControl.PropagationFlags]$PropagationFlags
    )
 
-    $PropFlagsNone = $PropagationFlags -eq [Security.AccessControl.PropagationFlags]::None
-    $PropFlagsInheritOnly = $PropagationFlags -eq [Security.AccessControl.PropagationFlags]::InheritOnly
+    $PropFlagsNone                   = $PropagationFlags -eq [Security.AccessControl.PropagationFlags]::None
+    $PropFlagsInheritOnly            = $PropagationFlags -eq [Security.AccessControl.PropagationFlags]::InheritOnly
     $PropFlagsInheritOnlyNoPropagate = $PropagationFlags -eq ([Security.AccessControl.PropagationFlags]::InheritOnly -bor [Security.AccessControl.PropagationFlags]::NoPropagateInherit)
-    $PropFlagsNoPropagate = $PropagationFlags -eq [Security.AccessControl.PropagationFlags]::NoPropagateInherit
+    $PropFlagsNoPropagate            = $PropagationFlags -eq [Security.AccessControl.PropagationFlags]::NoPropagateInherit
 
     If ($InheritanceFlags -eq [Security.AccessControl.InheritanceFlags]::None) {
         return [PSPM.Security.ContainerInheritanceFlags]::Container
