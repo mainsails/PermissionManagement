@@ -7,7 +7,7 @@ It can grant or revoke permissions on a file, a directory, a registry key, or a 
 
 ## Requirements
 * All Windows Client Operating Systems are supported  
-   Windows 7 SP1 and Windows Server 2008R2 through to Windows 10 Build 1703 and Windows Server 2016
+   Windows 7 SP1 and Windows Server 2008R2 through to Windows 10 CB and Windows Server 2016
 * PowerShell Version 4
 
 
