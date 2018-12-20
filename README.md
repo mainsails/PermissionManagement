@@ -46,6 +46,12 @@ Get-Permission -Path 'C:\Windows' -Identity 'Administrators'
 # Returns 'System.Security.AccessControl.FileSystemAccessRule' objects for all the 'Administrators' rules on 'C:\Windows'
 ```
 
+### Test for Admin
+```powershell
+Test-Administrator -Identity 'DOMAIN\UserName'
+# Demonstrates how to check if 'DOMAIN\UserName' is an administrator on a computer
+```
+
 ### Test Permissions
 ```powershell
 Test-Permission -Identity 'DOMAIN\UserName' -Permission 'FullControl' -Path 'C:\Test'
@@ -58,10 +64,16 @@ Test-Permission -Identity 'DOMAIN\UserName' -Permission 'Write' -ApplyTo 'Contai
 # Demonstrates how to test for inheritance/propogation flags, in addition to permissions
 ```
 
-### Test for Admin
+### Test Credentials
 ```powershell
-Test-Administrator -Identity 'DOMAIN\UserName'
-# Demonstrates how to check if 'DOMAIN\UserName' is an administrator on a computer
+Test-PSCredential -Credential $(Get-Credential)
+# Demonstrates how to test a credential for an active directory account
+
+Test-PSCredential -ComputerName Computer1 -Credential $Cred
+# Demonstrates how to test a credential for a local account
+
+Test-PSCredential -Credential $Cred -Domain DOMAIN
+# Demonstrates how to test a credential for an active directory account on 'DOMAIN'
 ```
 
 ### Enable ACL Inheritance

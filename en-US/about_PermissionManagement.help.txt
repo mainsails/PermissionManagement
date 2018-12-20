@@ -40,6 +40,11 @@ EXAMPLES
         - Returns 'System.Security.AccessControl.FileSystemAccessRule' objects for all the 'Administrators' rules on 'C:\Windows'
 
 
+    Test for Admin :
+        Test-Administrator -Identity 'DOMAIN\UserName'
+        - Demonstrates how to check if 'DOMAIN\UserName' is an administrator on a computer
+
+
     Test Permissions :
         Test-Permission -Identity 'DOMAIN\UserName' -Permission 'FullControl' -Path 'C:\Test'
         - Demonstrates how to check that 'DOMAIN\UserName' has 'FullControl' permission on the 'C:\Test' directory
@@ -51,9 +56,15 @@ EXAMPLES
         - Demonstrates how to test for inheritance/propogation flags, in addition to permissions
 
 
-    Test for Admin :
-        Test-Administrator -Identity 'DOMAIN\UserName'
-        - Demonstrates how to check if 'DOMAIN\UserName' is an administrator on a computer
+    Test Credentials
+        Test-PSCredential -Credential $(Get-Credential)
+        - Demonstrates how to test a credential for an active directory account
+
+        Test-PSCredential -ComputerName Computer1 -Credential $Cred
+        - Demonstrates how to test a credential for a local account
+
+        Test-PSCredential -Credential $Cred -Domain DOMAIN
+        - Demonstrates how to test a credential for an active directory account on 'DOMAIN'
 
 
     Enable ACL Inheritance :

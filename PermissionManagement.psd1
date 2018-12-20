@@ -4,7 +4,7 @@
 RootModule = 'PermissionManagement.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.1.1'
+ModuleVersion = '0.1.2'
 
 # ID used to uniquely identify this module
 GUID = '6561f324-1304-4df7-a233-c14e6100b39b'
@@ -28,7 +28,8 @@ FunctionsToExport = @('Disable-AclInheritance',
                       'Grant-Permission',
                       'Revoke-Permission',
                       'Test-Administrator',
-                      'Test-Permission')
+                      'Test-Permission',
+                      'Test-PSCredential')
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
 PrivateData = @{
