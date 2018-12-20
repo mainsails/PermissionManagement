@@ -6,7 +6,7 @@ It can grant or revoke permissions on a file, a directory, a registry key, or a 
 
 
 ## Requirements
-* All Windows Client Operating Systems are supported  
+* All Windows Client Operating Systems are supported
    Windows 7 SP1 and Windows Server 2008R2 through to Windows 10 CB and Windows Server 2016
 * PowerShell Version 4
 
@@ -56,6 +56,12 @@ Test-Permission -Identity 'DOMAIN\UserName' -Permission 'WriteKey' -Path 'HKLM:\
 
 Test-Permission -Identity 'DOMAIN\UserName' -Permission 'Write' -ApplyTo 'Container' -Path 'C:\Test'
 # Demonstrates how to test for inheritance/propogation flags, in addition to permissions
+```
+
+### Test for Admin
+```powershell
+Test-Administrator -Identity 'DOMAIN\UserName'
+# Demonstrates how to check if 'DOMAIN\UserName' is an administrator on a computer
 ```
 
 ### Enable ACL Inheritance
