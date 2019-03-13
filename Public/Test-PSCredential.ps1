@@ -9,9 +9,9 @@ Function Test-PSCredential {
     .PARAMETER Context
         An optional parameter specifying what type of credential this is. Possible values are 'Domain' and 'Machine'. The default is 'Domain'
     .PARAMETER ComputerName
-        If Context is machine, test local credential against this computer
+        If Context is machine, test the credential against this computer
     .PARAMETER Domain
-        If context is 'Domain' (default), test credential against this domain
+        If context is 'Domain' (default), test the credential against this domain
     .OUTPUTS
         System.Boolean
     .EXAMPLE
@@ -29,7 +29,7 @@ Function Test-PSCredential {
     Param(
         [Parameter(ValueFromPipeline=$true)]
         [System.Management.Automation.PSCredential]$Credential = $(Get-Credential),
-        [ValidateSet('Domain','Machine','ApplicationDirectory')]
+        [ValidateSet('Domain','Machine')]
         [string]$Context = 'Domain',
         [Parameter(ParameterSetName = 'Machine')]
         [string]$ComputerName,
@@ -38,8 +38,12 @@ Function Test-PSCredential {
     )
 
     Begin {
-        Try   { Add-Type -AssemblyName System.DirectoryServices.AccountManagement }
-        Catch { Throw }
+        Try   {
+            Add-Type -AssemblyName System.DirectoryServices.AccountManagement
+        }
+        Catch {
+            Throw
+        }
 
         # Create principal context
         If ($PSCmdlet.ParameterSetName -eq 'Domain') {
